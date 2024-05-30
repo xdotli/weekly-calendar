@@ -28,4 +28,9 @@ export class CalendarComponent implements OnInit {
     this.dateService.getPreviousWeekStartDate();
     this.updateWeekDates();
   }
+
+  goToToday(): void {
+    this.dateService.goToToday();
+    this.updateWeekDates();
+  }
 }

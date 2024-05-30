@@ -5,9 +5,12 @@ import { Injectable } from '@angular/core';
 })
 export class DateService {
   currentStartDate: Date;
+  today: Date;
 
   constructor() {
-    this.currentStartDate = this.getStartOfWeek(new Date()); // Start of the current week (Sunday)
+    this.today = new Date();
+    this.today.setHours(0, 0, 0, 0); // Ensure no time component
+    this.currentStartDate = this.getStartOfWeek(this.today);
   }
 
   getStartOfWeek(date: Date): Date {
@@ -41,7 +44,16 @@ export class DateService {
   getPreviousWeekStartDate(): Date {
     const previousWeek = new Date(this.currentStartDate);
     previousWeek.setDate(this.currentStartDate.getDate() - 7);
-    this.currentStartDate = this.getStartOfWeek(previousWeek);
+    if (previousWeek < this.today) {
+      this.currentStartDate = this.getStartOfWeek(this.today);
+    } else {
+      this.currentStartDate = this.getStartOfWeek(previousWeek);
+    }
+    return this.currentStartDate;
+  }
+
+  goToToday(): Date {
+    this.currentStartDate = this.getStartOfWeek(this.today);
     return this.currentStartDate;
   }
 }
