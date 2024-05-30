@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { startOfWeek, addDays, format, addWeeks, subWeeks } from 'date-fns';
 
 @Injectable({
   providedIn: 'root'
@@ -8,22 +7,41 @@ export class DateService {
   currentStartDate: Date;
 
   constructor() {
-    this.currentStartDate = startOfWeek(new Date(), { weekStartsOn: 0 }); // Start of the current week (Sunday)
+    this.currentStartDate = this.getStartOfWeek(new Date()); // Start of the current week (Sunday)
+  }
+
+  getStartOfWeek(date: Date): Date {
+    const day = date.getDay();
+    const diff = date.getDate() - day; // Adjust when day is not Sunday
+    return new Date(date.setDate(diff));
   }
 
   getWeekDates(startDate: Date): string[] {
-    return Array.from({ length: 7 }).map((_, i) =>
-      format(addDays(startDate, i), 'EEEE, MMMM do, yyyy')
-    );
+    const weekDates = [];
+    for (let i = 0; i < 7; i++) {
+      const date = new Date(startDate);
+      date.setDate(startDate.getDate() + i);
+      weekDates.push(this.formatDate(date));
+    }
+    return weekDates;
+  }
+
+  formatDate(date: Date): string {
+    const options: Intl.DateTimeFormatOptions = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' };
+    return date.toLocaleDateString('en-US', options);
   }
 
   getNextWeekStartDate(): Date {
-    this.currentStartDate = addWeeks(this.currentStartDate, 1);
+    const nextWeek = new Date(this.currentStartDate);
+    nextWeek.setDate(this.currentStartDate.getDate() + 7);
+    this.currentStartDate = this.getStartOfWeek(nextWeek);
     return this.currentStartDate;
   }
 
   getPreviousWeekStartDate(): Date {
-    this.currentStartDate = subWeeks(this.currentStartDate, 1);
+    const previousWeek = new Date(this.currentStartDate);
+    previousWeek.setDate(this.currentStartDate.getDate() - 7);
+    this.currentStartDate = this.getStartOfWeek(previousWeek);
     return this.currentStartDate;
   }
 }
