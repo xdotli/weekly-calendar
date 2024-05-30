@@ -1,0 +1,19 @@
+.calendar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .week {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+  }
+  
+  .day-card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 150px;
+    text-align: center;
+  }
+  
