@@ -64,10 +64,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "weekly-calendar:build:production"
+              "buildTarget": "weekly-calendar:build:production"
             },
             "development": {
-              "browserTarget": "weekly-calendar:build:development"
+              "buildTarget": "weekly-calendar:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -75,7 +75,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "weekly-calendar:build"
+            "buildTarget": "weekly-calendar:build"
           }
         },
         "test": {
