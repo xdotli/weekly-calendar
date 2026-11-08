@@ -4,6 +4,7 @@ import { DateService } from '../date.service';
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
+  standalone: false,
   styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent implements OnInit {
